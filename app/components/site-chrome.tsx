@@ -1,4 +1,6 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export const navigation = [
   { label: "Home", href: "/" },
@@ -24,6 +26,7 @@ export function Logo({ inverse = false }: { inverse?: boolean }) {
 }
 
 export function SiteHeader() {
+  const pathname = usePathname();
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-[#dcece6] bg-white">
       <div className="grid min-h-[54px] w-full grid-cols-[auto_1fr_auto] items-center gap-8 px-[var(--site-gutter)] max-[1050px]:grid-cols-[1fr_auto] max-[700px]:min-h-[52px]">
@@ -31,7 +34,7 @@ export function SiteHeader() {
         <nav className="mx-auto flex w-fit justify-center gap-9 text-sm font-medium text-[#284642] max-[1050px]:hidden">
           {navigation.map((item) => (
             <Link
-              className="transition hover:text-[#0f8a7d]"
+              className={`transition ${pathname === item.href ? "font-semibold text-[#0f8a7d]" : "hover:text-[#0f8a7d]"}`}
               href={item.href}
               key={item.label}
             >
