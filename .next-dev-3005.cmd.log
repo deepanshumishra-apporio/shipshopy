@@ -1,0 +1,12 @@
+
+> shipping@0.1.0 dev
+> next dev --port 3005
+
+▲ Next.js 16.2.7 (Turbopack)
+- Local:         http://localhost:3005
+- Network:       http://192.168.1.42:3005
+✓ Ready in 1480ms
+
+ GET / 200 in 1566ms (next.js: 442ms, application-code: 1124ms)
+ GET / 200 in 302ms (next.js: 8ms, application-code: 294ms)
+[?25h
