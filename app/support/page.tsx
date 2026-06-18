@@ -3,14 +3,7 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 
-const ease = [0.16, 1, 0.3, 1] as const;
-const fadeUp    = { hidden: { opacity: 0, y: 28  }, show: { opacity: 1, y: 0, transition: { duration: 0.55, ease } } };
-const scaleIn   = { hidden: { opacity: 0, scale: 0.93 }, show: { opacity: 1, scale: 1, transition: { duration: 0.55, ease } } };
-const slideRight = { hidden: { opacity: 0, x: -40 }, show: { opacity: 1, x: 0, transition: { duration: 0.6, ease } } };
-const slideLeft  = { hidden: { opacity: 0, x: 40  }, show: { opacity: 1, x: 0, transition: { duration: 0.6, ease } } };
-const staggerGrid = (delay = 0.07) => ({ hidden: {}, show: { transition: { staggerChildren: delay } } });
-const cardItem  = { hidden: { opacity: 0, y: 22  }, show: { opacity: 1, y: 0, transition: { duration: 0.45, ease } } };
-const vp = { once: true, amount: 0.15 as const };
+import { fadeUp, scaleIn, slideRight, slideLeft, staggerGrid, cardItem, vp } from "@/lib/motion";
 
 const channels = [
   { eyebrow: "Email",  title: "info@shipshopy.com",     copy: "Send us your query, shipment ID, or issue details. Our team responds within 4 business hours.",              href: "mailto:info@shipshopy.com",                            cta: "Send email" },
@@ -24,7 +17,7 @@ const topics = [
 ];
 
 const faqs = [
-  ["How do I get started with Shipshopy?",                      "Contact our team via the form below or call us. We'll set up your account, configure your pickup address, and walk you through your first booking — usually within one business day."],
+  ["How do I get started with Shipshopy?",                      "Email or call our team directly. We'll set up your account, configure your pickup address, and walk you through your first booking — usually within one business day."],
   ["What are your support hours?",                              "Our team is available Monday to Saturday, 9 AM to 7 PM IST. For urgent active-shipment issues, phone support is the fastest channel."],
   ["How do I report a missing or damaged shipment?",            "Email us at info@shipshopy.com with your tracking number and a description of the issue. We escalate to the courier and open a formal investigation within 24 hours."],
   ["Can Shipshopy integrate with my Shopify or WooCommerce store?", "Yes. We support API and webhook integrations with major ecommerce platforms. Reach out to our team for the integration guide and credentials."],
@@ -56,7 +49,7 @@ export default function SupportPage() {
             Support
           </motion.div>
           <motion.h1 variants={fadeUp} className="mb-6 text-[clamp(2.25rem,3.5vw,3.85rem)] font-semibold leading-[1.1] text-[#07131f] max-[700px]:text-[clamp(2rem,9vw,2.75rem)]">
-            We're here to help you ship better.
+            We&apos;re here to help you ship better.
           </motion.h1>
           <motion.p variants={fadeUp} className="max-w-2xl text-[0.95rem] leading-7 text-[#52646f]">
             Get help with onboarding, courier setup, shipment tracking, billing, COD remittance, and enterprise shipping workflows. Our team responds fast.
@@ -101,62 +94,60 @@ export default function SupportPage() {
       {/* Form + info */}
       <section className="px-[var(--site-gutter)] py-16">
         <motion.div className="mb-12 text-center" variants={fadeUp} initial="hidden" whileInView="show" viewport={vp}>
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.12em] text-[#0f8a7d]">Contact form</p>
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.12em] text-[#0f8a7d]">Reach us directly</p>
           <h2 className="mx-auto max-w-2xl text-[clamp(1.9rem,3vw,3rem)] font-semibold leading-[1.1] text-[#07131f]">
-            Send us a message
+            No forms. Just talk to a real person.
           </h2>
         </motion.div>
         <div className="grid grid-cols-[1fr_380px] gap-8 max-[1050px]:grid-cols-1">
-          <motion.form
-            className="grid gap-5 rounded-md border border-[#dcece6] bg-white p-8 max-[700px]:p-5"
+          <motion.div
+            className="grid content-start gap-7 rounded-md border border-[#dcece6] bg-white p-8 max-[700px]:p-5"
             variants={slideRight}
             initial="hidden"
             whileInView="show"
             viewport={vp}
           >
-            <div className="grid grid-cols-2 gap-5 max-[700px]:grid-cols-1">
-              <label className="grid gap-2 text-sm font-semibold text-[#07131f]">
-                Full name
-                <input className="min-h-11 rounded-md border border-[#dcece6] bg-[#f7fffb] px-3 text-sm font-normal outline-[#0f8a7d]" placeholder="Your name" type="text" />
-              </label>
-              <label className="grid gap-2 text-sm font-semibold text-[#07131f]">
-                Email address
-                <input className="min-h-11 rounded-md border border-[#dcece6] bg-[#f7fffb] px-3 text-sm font-normal outline-[#0f8a7d]" placeholder="you@example.com" type="email" />
-              </label>
+            <div>
+              <h3 className="mb-2 text-xl font-semibold text-[#07131f]">Skip the paperwork</h3>
+              <p className="max-w-md text-sm leading-7 text-[#52646f]">
+                Pick what you need and message us directly — your topic is pre-filled, so you just hit send. We reply within 4 business hours.
+              </p>
             </div>
-            <div className="grid grid-cols-2 gap-5 max-[700px]:grid-cols-1">
-              <label className="grid gap-2 text-sm font-semibold text-[#07131f]">
-                Phone number
-                <input className="min-h-11 rounded-md border border-[#dcece6] bg-[#f7fffb] px-3 text-sm font-normal outline-[#0f8a7d]" placeholder="+91 98765 43210" type="tel" />
-              </label>
-              <label className="grid gap-2 text-sm font-semibold text-[#07131f]">
-                Company name
-                <input className="min-h-11 rounded-md border border-[#dcece6] bg-[#f7fffb] px-3 text-sm font-normal outline-[#0f8a7d]" placeholder="Your business name" type="text" />
-              </label>
+
+            <div className="grid gap-3">
+              <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#0f8a7d]">Popular topics</p>
+              <div className="flex flex-wrap gap-2">
+                {topics.map((t) => (
+                  <motion.a
+                    key={t}
+                    href={`mailto:info@shipshopy.com?subject=${encodeURIComponent(t)}`}
+                    className="rounded-full border border-[#dcece6] bg-[#f7fffb] px-4 py-2 text-sm font-medium text-[#07131f] transition hover:border-[#0f8a7d] hover:text-[#0f8a7d]"
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.96 }}
+                  >
+                    {t}
+                  </motion.a>
+                ))}
+              </div>
             </div>
-            <label className="grid gap-2 text-sm font-semibold text-[#07131f]">
-              Topic
-              <select className="min-h-11 rounded-md border border-[#dcece6] bg-[#f7fffb] px-3 text-sm font-normal outline-[#0f8a7d]">
-                <option value="">Select a topic</option>
-                {topics.map((t) => <option key={t}>{t}</option>)}
-              </select>
-            </label>
-            <label className="grid gap-2 text-sm font-semibold text-[#07131f]">
-              Shipment / tracking ID
-              <input className="min-h-11 rounded-md border border-[#dcece6] bg-[#f7fffb] px-3 text-sm font-normal outline-[#0f8a7d]" placeholder="SHP-XXXXXXXX (if applicable)" type="text" />
-            </label>
-            <label className="grid gap-2 text-sm font-semibold text-[#07131f]">
-              Message
-              <textarea className="min-h-[120px] resize-y rounded-md border border-[#dcece6] bg-[#f7fffb] px-3 py-3 text-sm font-normal outline-[#0f8a7d]" placeholder="Describe your issue or question in detail…" />
-            </label>
-            <motion.button
-              className="min-h-11 rounded-md bg-[#0f8a7d] font-bold text-white transition hover:bg-[#087f72]"
-              whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
-              type="submit"
-            >
-              Send message
-            </motion.button>
-          </motion.form>
+
+            <div className="grid grid-cols-2 gap-3 max-[700px]:grid-cols-1">
+              <motion.a
+                className="inline-flex min-h-12 items-center justify-center rounded-md bg-[#0f8a7d] px-5 text-sm font-bold text-white transition hover:bg-[#087f72]"
+                href="mailto:info@shipshopy.com"
+                whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
+              >
+                Email us
+              </motion.a>
+              <motion.a
+                className="inline-flex min-h-12 items-center justify-center rounded-md border border-[#dcece6] bg-white px-5 text-sm font-bold text-[#07131f] transition hover:border-[#0f8a7d] hover:text-[#0f8a7d]"
+                href="tel:+919218077124"
+                whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
+              >
+                Call now
+              </motion.a>
+            </div>
+          </motion.div>
 
           <motion.aside
             className="grid content-start gap-4"

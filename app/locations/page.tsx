@@ -6,13 +6,7 @@ import { motion } from "motion/react";
 import routeMap from "../../assets/ChatGPT Image Jun 9, 2026, 02_05_12 PM.png";
 import logisticsBanner from "../../assets/shipshopy-logistics-banner.png";
 
-const ease = [0.16, 1, 0.3, 1] as const;
-const fadeUp    = { hidden: { opacity: 0, y: 28  }, show: { opacity: 1, y: 0, transition: { duration: 0.55, ease } } };
-const scaleIn   = { hidden: { opacity: 0, scale: 0.93 }, show: { opacity: 1, scale: 1, transition: { duration: 0.55, ease } } };
-const slideLeft  = { hidden: { opacity: 0, x: 40  }, show: { opacity: 1, x: 0, transition: { duration: 0.6, ease } } };
-const staggerGrid = (delay = 0.07) => ({ hidden: {}, show: { transition: { staggerChildren: delay } } });
-const cardItem  = { hidden: { opacity: 0, y: 22  }, show: { opacity: 1, y: 0, transition: { duration: 0.45, ease } } };
-const vp = { once: true, amount: 0.15 as const };
+import { ease, fadeUp, scaleIn, slideLeft, staggerGrid, cardItem, vp } from "@/lib/motion";
 
 const stats = [
   ["220+", "serviceable regions"],
@@ -194,7 +188,7 @@ export default function LocationsPage() {
       <motion.section className="px-[var(--site-gutter)] pt-16 pb-6 text-center" variants={fadeUp} initial="hidden" whileInView="show" viewport={vp}>
         <p className="mb-3 text-xs font-bold uppercase tracking-[0.12em] text-[#0f8a7d]">Logistics network</p>
         <h2 className="mx-auto max-w-2xl text-[clamp(1.9rem,3vw,3rem)] font-semibold leading-[1.1] text-[#07131f]">
-          Built for India's fastest-growing commerce corridors
+          Built for India&apos;s fastest-growing commerce corridors
         </h2>
       </motion.section>
       <motion.section
@@ -225,7 +219,7 @@ export default function LocationsPage() {
           Not sure if we cover your pincode?
         </h2>
         <p className="mx-auto mb-8 max-w-lg text-base leading-7 text-[#52646f]">
-          Contact our team with your origin and destination pincodes. We'll confirm coverage and recommend the best service tier.
+          Contact our team with your origin and destination pincodes. We&apos;ll confirm coverage and recommend the best service tier.
         </p>
         <div className="flex justify-center gap-4 max-[700px]:flex-col max-[700px]:items-center">
           <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.96 }}>

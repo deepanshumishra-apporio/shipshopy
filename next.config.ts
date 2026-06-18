@@ -2,6 +2,15 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["127.0.0.1"],
+  async redirects() {
+    return [
+      {
+        source: "/admin",
+        destination: "https://shipkloud.com/partner",
+        permanent: false,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

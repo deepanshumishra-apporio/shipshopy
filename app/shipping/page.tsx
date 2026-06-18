@@ -9,13 +9,7 @@ import workflowTransportation from "../../assets/workflow-transportation-panel.p
 import workflowDelivery from "../../assets/workflow-delivery-panel.png";
 import vanImage from "../../assets/shipshopy-van-premium.png";
 
-const ease = [0.16, 1, 0.3, 1] as const;
-const fadeUp    = { hidden: { opacity: 0, y: 28  }, show: { opacity: 1, y: 0, transition: { duration: 0.55, ease } } };
-const scaleIn   = { hidden: { opacity: 0, scale: 0.93 }, show: { opacity: 1, scale: 1, transition: { duration: 0.55, ease } } };
-const slideLeft  = { hidden: { opacity: 0, x: 40  }, show: { opacity: 1, x: 0, transition: { duration: 0.6, ease } } };
-const staggerGrid = (delay = 0.07) => ({ hidden: {}, show: { transition: { staggerChildren: delay } } });
-const cardItem  = { hidden: { opacity: 0, y: 22  }, show: { opacity: 1, y: 0, transition: { duration: 0.45, ease } } };
-const vp = { once: true, amount: 0.15 as const };
+import { ease, fadeUp, scaleIn, slideLeft, staggerGrid, cardItem, vp } from "@/lib/motion";
 
 const services = [
   { number: "01", title: "Ecommerce parcel shipping", copy: "Book domestic shipments in bulk, auto-assign the fastest courier, and get labels generated in one click. Designed for daily dispatch volumes.", tags: ["Bulk upload", "Auto labels", "Rate compare"] },

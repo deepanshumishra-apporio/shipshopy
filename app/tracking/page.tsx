@@ -6,13 +6,7 @@ import { motion } from "motion/react";
 import routeMap from "../../assets/ChatGPT Image Jun 9, 2026, 02_05_12 PM.png";
 import dashboardMockup from "../../assets/shipshopy-dashboard.png";
 
-const ease = [0.16, 1, 0.3, 1] as const;
-const fadeUp   = { hidden: { opacity: 0, y: 28 }, show: { opacity: 1, y: 0,  transition: { duration: 0.55, ease } } };
-const scaleIn  = { hidden: { opacity: 0, scale: 0.93 }, show: { opacity: 1, scale: 1, transition: { duration: 0.55, ease } } };
-const slideLeft  = { hidden: { opacity: 0, x: 40  }, show: { opacity: 1, x: 0, transition: { duration: 0.6, ease } } };
-const staggerGrid = (delay = 0.07) => ({ hidden: {}, show: { transition: { staggerChildren: delay } } });
-const cardItem = { hidden: { opacity: 0, y: 22 }, show: { opacity: 1, y: 0, transition: { duration: 0.45, ease } } };
-const vp = { once: true, amount: 0.15 as const };
+import { ease, fadeUp, scaleIn, slideLeft, staggerGrid, cardItem, vp } from "@/lib/motion";
 
 const milestones = [
   { step: "01", title: "Order placed",       copy: "Booking confirmed, tracking ID generated, and courier assignment begins immediately." },
@@ -32,7 +26,7 @@ const features = [
 ];
 
 const faqs = [
-  ["How do I track a shipment?",                     "Enter your Shipshopy tracking number in the field above and click Check. You'll see the full scan history, current location, and estimated delivery time."],
+  ["How do I track a shipment?",                     "Open the branded live tracking link we send with every shipment. You'll see the full scan history, current location, and estimated delivery time — no tracking number to type."],
   ["Can I share a tracking link with my customers?", "Yes. Every shipment gets a branded tracking URL that you can send via SMS, email, or embed on your website order confirmation page."],
   ["How often is tracking updated?",                 "Tracking events refresh in real time as the courier scans the parcel at each hub, transit point, or delivery attempt."],
   ["What happens if a delivery attempt fails?",      "Shipshopy flags the failed attempt, logs the reason code, and schedules a re-delivery. You receive an instant notification to act if needed."],
@@ -65,23 +59,26 @@ export default function TrackingPage() {
               Track every shipment in real time.
             </motion.h1>
             <motion.p variants={fadeUp} className="mb-8 max-w-lg text-[0.95rem] leading-7 text-[#52646f]">
-              Enter a tracking number to see the full scan history, current location, courier movement, and expected delivery window.
+              Every Shipshopy shipment comes with a branded live tracking link — full scan history, current location, courier movement, and expected delivery window. Nothing to type in.
             </motion.p>
-            <motion.form variants={fadeUp} className="grid max-w-[455px] grid-cols-[1fr_132px] rounded-full border border-[#dcece6] bg-[#f7fffb] p-1 max-[700px]:grid-cols-1 max-[700px]:rounded-md">
-              <label htmlFor="tracking-hero" className="sr-only">Tracking number</label>
-              <input
-                className="min-h-12 min-w-0 bg-transparent px-5 text-sm outline-none placeholder:text-[#8aa09b]"
-                id="tracking-hero"
-                placeholder="Enter tracking number"
-              />
-              <motion.button
-                className="min-h-12 rounded-full bg-[#0f8a7d] text-sm font-bold text-white max-[700px]:rounded-md"
-                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.96 }}
-                type="submit"
-              >
-                Track
-              </motion.button>
-            </motion.form>
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-3">
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.96 }}>
+                <Link
+                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#0f8a7d] px-7 text-sm font-bold text-white transition hover:bg-[#087f72]"
+                  href="/shipping"
+                >
+                  Book &amp; track a shipment
+                </Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.96 }}>
+                <Link
+                  className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#dcece6] bg-white px-7 text-sm font-semibold text-[#07131f] transition hover:border-[#0f8a7d] hover:text-[#0f8a7d]"
+                  href="/support"
+                >
+                  Get a tracking link
+                </Link>
+              </motion.div>
+            </motion.div>
             <motion.div variants={fadeUp} className="mt-6 flex flex-wrap gap-3 text-sm font-medium text-[#52646f]">
               {["Live GPS", "SMS alerts", "Delivery proof"].map((item) => (
                 <span className="rounded-full border border-[#dcece6] bg-white px-4 py-2" key={item}>{item}</span>

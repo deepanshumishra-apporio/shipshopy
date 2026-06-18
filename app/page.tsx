@@ -1,6 +1,6 @@
 "use client";
 
-import Image, { type StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
 
@@ -16,43 +16,7 @@ import workflowPacking from "../assets/workflow-packing-panel.png";
 import workflowTransportation from "../assets/workflow-transportation-panel.png";
 import vanImage from "../assets/shipshopy-van-premium.png";
 import { TestimonialsSection } from "@/components/ui/testimonials-section";
-
-// ── Animation primitives ──────────────────────────────────────────
-const ease = [0.16, 1, 0.3, 1] as const;
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  show:   { opacity: 1, y: 0,  transition: { duration: 0.55, ease } },
-};
-const fadeIn = {
-  hidden: { opacity: 0 },
-  show:   { opacity: 1, transition: { duration: 0.5, ease } },
-};
-const scaleIn = {
-  hidden: { opacity: 0, scale: 0.93 },
-  show:   { opacity: 1, scale: 1, transition: { duration: 0.55, ease } },
-};
-const slideRight = {
-  hidden: { opacity: 0, x: -40 },
-  show:   { opacity: 1, x: 0,   transition: { duration: 0.6, ease } },
-};
-const slideLeft = {
-  hidden: { opacity: 0, x: 40 },
-  show:   { opacity: 1, x: 0,  transition: { duration: 0.6, ease } },
-};
-const staggerGrid = (delay = 0.07) => ({
-  hidden: {},
-  show:   { transition: { staggerChildren: delay } },
-});
-
-// Card item variant used inside stagger containers
-const cardItem = {
-  hidden: { opacity: 0, y: 22 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.45, ease } },
-};
-
-// Viewport config — animate once when 15 % of element is visible
-const vp = { once: true, amount: 0.15 as const };
+import { ease, fadeUp, scaleIn, slideRight, slideLeft, staggerGrid, cardItem, vp } from "@/lib/motion";
 
 // ── Data ──────────────────────────────────────────────────────────
 const integrations = [
@@ -200,22 +164,15 @@ export default function Home() {
 
             <motion.div variants={fadeUp}>
               <p className="mb-3 text-[0.7rem] font-bold uppercase tracking-[0.1em] text-[#8aa09b]">Already have a shipment?</p>
-              <form className="grid max-w-[455px] grid-cols-[1fr_120px] overflow-hidden rounded-full border border-[#dcece6] bg-[#f7fffb] p-1 transition-shadow focus-within:shadow-[0_0_0_3px_#0f8a7d20] max-[700px]:grid-cols-1 max-[700px]:rounded-md">
-                <label htmlFor="tracking-number" className="sr-only">Tracking number</label>
-                <input
-                  className="min-h-11 min-w-0 bg-transparent px-5 text-sm outline-none placeholder:text-[#8aa09b]"
-                  id="tracking-number"
-                  placeholder="Enter tracking number"
-                />
-                <motion.button
-                  className="min-h-11 rounded-full bg-[#07131f] text-sm font-bold text-white transition hover:bg-[#0f8a7d] max-[700px]:rounded-md"
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.96 }}
-                  type="submit"
+              <motion.div whileHover={{ x: 4 }} className="w-fit">
+                <Link
+                  className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[#dcece6] bg-[#f7fffb] px-6 text-sm font-bold text-[#07131f] transition hover:border-[#0f8a7d] hover:text-[#0f8a7d]"
+                  href="/tracking"
                 >
-                  Track
-                </motion.button>
-              </form>
+                  Track your shipment
+                  <span className="text-[#0f8a7d]">→</span>
+                </Link>
+              </motion.div>
             </motion.div>
 
             <motion.div
@@ -582,34 +539,26 @@ export default function Home() {
               </span>
             ))}
           </div>
-          <form className="grid gap-4">
-            {["Booking date", "Type of parcel", "Destination"].map((label, index) => (
-              <label className="grid gap-1.5 text-xs font-bold uppercase tracking-[0.08em] text-[#52646f]" key={label}>
-                {label}
-                {index === 1 ? (
-                  <select className="min-h-11 rounded-lg border border-[#dcece6] bg-[#f7fffb] px-3 text-sm font-normal text-[#07131f] outline-[#0f8a7d] transition focus:border-[#0f8a7d]">
-                    <option>Standard parcel</option>
-                    <option>Fragile parcel</option>
-                    <option>Document envelope</option>
-                    <option>Bulk shipment</option>
-                  </select>
-                ) : (
-                  <input
-                    className="min-h-11 rounded-lg border border-[#dcece6] bg-[#f7fffb] px-3 text-sm font-normal text-[#07131f] outline-none transition focus:border-[#0f8a7d] focus:ring-2 focus:ring-[#0f8a7d20]"
-                    placeholder={index === 0 ? "DD-MM-YYYY" : "City, State"}
-                  />
-                )}
-              </label>
+          <div className="grid gap-3">
+            {[
+              ["Weight & dimensions", "Priced on volumetric or actual weight — whichever is higher."],
+              ["Pickup & destination", "Zone-based pricing across 220+ serviceable regions."],
+              ["Service speed", "Standard, express, or same-day — you pick at booking."],
+            ].map(([title, copy]) => (
+              <div className="rounded-lg border border-[#dcece6] bg-[#f7fffb] p-4" key={title}>
+                <p className="text-sm font-semibold text-[#07131f]">{title}</p>
+                <p className="mt-1 text-xs leading-5 text-[#52646f]">{copy}</p>
+              </div>
             ))}
-            <motion.button
-              className="mt-1 min-h-11 rounded-lg bg-[#0f8a7d] text-sm font-bold text-white transition hover:bg-[#087f72]"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.97 }}
-              type="submit"
-            >
-              Calculate rate
-            </motion.button>
-          </form>
+            <motion.div className="mt-1" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
+              <Link
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-[#0f8a7d] text-sm font-bold text-white transition hover:bg-[#087f72]"
+                href="/shipping"
+              >
+                Get an instant quote
+              </Link>
+            </motion.div>
+          </div>
         </div>
         <div className="overflow-hidden bg-[#f7fffb]">
           <Image className="h-full w-full object-cover" src={pricingCourier} alt="Shipshopy rate calculator interface" sizes="(max-width: 900px) 92vw, 58vw" />
@@ -703,7 +652,7 @@ export default function Home() {
       >
         <div className="flex flex-col justify-center bg-[#f7fffb] p-10 max-[700px]:p-7">
           <p className="text-base leading-7 text-[#52646f]">
-            Talk to our team for onboarding, enterprise shipping workflows, and courier integrations. We'll have you shipping within one business day.
+            Talk to our team for onboarding, enterprise shipping workflows, and courier integrations. We&apos;ll have you shipping within one business day.
           </p>
           <motion.div
             className="mt-7 grid gap-3"

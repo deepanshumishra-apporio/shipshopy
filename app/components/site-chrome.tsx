@@ -1,6 +1,10 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import logo from "../../assets/Shipshopy_Logo.png";
 
 export const navigation = [
   { label: "Home", href: "/" },
@@ -10,26 +14,26 @@ export const navigation = [
   { label: "Support", href: "/support" },
 ];
 
-export function Logo({ inverse = false }: { inverse?: boolean }) {
+export function Logo() {
   return (
     <Link
-      className={`inline-flex items-center gap-2.5 text-base font-semibold ${inverse ? "text-white" : "text-[#07131f]"}`}
+      className="inline-flex items-center"
       href="/"
       aria-label="Shipshopy home"
     >
-      <span className="grid h-8 w-8 rotate-[-45deg] place-items-center rounded-[50%_50%_50%_12%] bg-gradient-to-br from-[#7dd3fc] via-[#38c39f] to-[#0f8a7d] shadow-none">
-        <span className="h-3 w-3 rounded border-[2.5px] border-white" />
-      </span>
-      <span>Shipshopy</span>
+      <Image src={logo} alt="Shipshopy" priority className="h-16 w-auto max-[700px]:h-12" />
     </Link>
   );
 }
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const closeMenu = () => setOpen(false);
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-[#dcece6] bg-white">
-      <div className="grid min-h-[54px] w-full grid-cols-[auto_1fr_auto] items-center gap-8 px-[var(--site-gutter)] max-[1050px]:grid-cols-[1fr_auto] max-[700px]:min-h-[52px]">
+      <div className="grid min-h-[54px] w-full grid-cols-[auto_1fr_auto] items-center gap-8 px-[var(--site-gutter)] max-[1050px]:grid-cols-[1fr_auto] max-[1050px]:gap-4 max-[700px]:min-h-[52px]">
         <Logo />
         <nav className="mx-auto flex w-fit justify-center gap-9 text-sm font-medium text-[#284642] max-[1050px]:hidden">
           {navigation.map((item) => (
@@ -42,18 +46,65 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <div className="flex items-center gap-4 text-sm font-medium text-[#284642]">
-          <Link className="transition hover:text-[#0f8a7d] max-[700px]:hidden" href="/support">
+        <div className="flex items-center gap-3 text-sm font-medium text-[#284642] max-[700px]:gap-2">
+          <a className="transition hover:text-[#0f8a7d] max-[700px]:hidden" href="https://shop.shipshopy.com/user/login">
             Sign in
-          </Link>
-          <Link
-          className="inline-flex min-h-8 items-center justify-center rounded-full bg-[#07131f] px-4 font-semibold text-white transition hover:bg-[#0f8a7d]"
-            href="/support"
+          </a>
+          <a
+            className="inline-flex min-h-8 items-center justify-center rounded-full bg-[#07131f] px-4 font-semibold text-white transition hover:bg-[#0f8a7d]"
+            href="https://shop.shipshopy.com/user/register"
           >
             Register
-          </Link>
+          </a>
+          <button
+            type="button"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            onClick={() => setOpen((v) => !v)}
+            className="hidden h-9 w-9 items-center justify-center rounded-md border border-[#dcece6] text-[#07131f] transition hover:border-[#0f8a7d] max-[1050px]:inline-flex"
+          >
+            <span className="relative block h-4 w-5" aria-hidden="true">
+              <span className={`absolute left-0 top-0 h-0.5 w-full rounded bg-current transition-transform duration-200 ${open ? "translate-y-[7px] rotate-45" : ""}`} />
+              <span className={`absolute left-0 top-[7px] h-0.5 w-full rounded bg-current transition-opacity duration-200 ${open ? "opacity-0" : ""}`} />
+              <span className={`absolute left-0 top-[14px] h-0.5 w-full rounded bg-current transition-transform duration-200 ${open ? "-translate-y-[7px] -rotate-45" : ""}`} />
+            </span>
+          </button>
         </div>
       </div>
+
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.nav
+            key="mobile-menu"
+            id="mobile-menu"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden border-t border-[#dcece6] bg-white min-[1051px]:hidden"
+          >
+            <div className="grid gap-1 px-[var(--site-gutter)] py-4">
+              {navigation.map((item) => (
+                <Link
+                  className={`rounded-md px-3 py-3 text-sm font-medium transition ${pathname === item.href ? "bg-[#f0fbf7] font-semibold text-[#0f8a7d]" : "text-[#284642] hover:bg-[#f7fffb] hover:text-[#0f8a7d]"}`}
+                  href={item.href}
+                  key={item.label}
+                  onClick={closeMenu}
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <a
+                className="mt-1 rounded-md px-3 py-3 text-sm font-medium text-[#284642] transition hover:bg-[#f7fffb] hover:text-[#0f8a7d] min-[701px]:hidden"
+                href="https://shop.shipshopy.com/user/login"
+              >
+                Sign in
+              </a>
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

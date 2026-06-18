@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { SiteHeader, SiteFooter } from "./components/site-chrome";
 import "./globals.css";
@@ -13,6 +13,12 @@ export const metadata: Metadata = {
   title: "Shipshopy | Reliable Courier Platform",
   description:
     "Shipshopy is a shipping platform for booking, pricing, tracking, and managing ecommerce deliveries.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({
